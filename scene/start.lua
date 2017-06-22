@@ -36,11 +36,7 @@ function scene:create(event)
 	background.fill.effect.vertical.sigma = 200
 
 	--лого--
-	--local logo
-	local  logo = display.newImageRect(sceneGroup, "images/logo.png", 510, 300)
-	logo.x, logo.y = display.contentCenterX, display.contentCenterY - display.contentCenterY*0.7
-
-	
+	local logo = display.newText(sceneGroup, "Relation \nFinder", display.contentCenterX, display.contentCenterY  - display.actualContentHeight/4 - 50, font, 80)
 	
 
 	local playButton = display.newRoundedRect(sceneGroup, display.contentCenterX - 150, display.contentCenterY, 200, 200, 10)
@@ -52,6 +48,10 @@ function scene:create(event)
 	recordButton:setFillColor(unpack(BUTTON_COLOR))
 	local  recordButtonImages = display.newImageRect(sceneGroup, "images/play_button.png", 120, 120)
 	recordButtonImages.x, recordButtonImages.y = display.contentCenterX + 150, display.contentCenterY
+
+	--Титры
+	local logo = display.newText(sceneGroup, "By Manzick \nFor FNight", display.contentCenterX, display.contentCenterY + display.actualContentHeight/4 + 50, font, 80)
+
 
 
 	print("jj")

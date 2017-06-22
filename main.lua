@@ -68,18 +68,18 @@ end
 
 loadBase()
 
-sound_on = baseTable.sound
-music_on = baseTable.music
-ads_on = baseTable.sound2
-click_sound = audio.loadSound("sound/click_sound.mp3") --Необходимо доработать систему звуков
-background_music = audio.loadStream("sound/background_music.mp3")
-backgroundMusicChannel = audio.play(background_music, {channel = 3, loops = -1})
-if (music_on) then
+--sound_on = baseTable.sound
+--music_on = baseTable.music
+--ads_on = baseTable.sound2
+--click_sound = audio.loadSound("sound/click_sound.mp3") --Необходимо доработать систему звуков
+--background_music = audio.loadStream("sound/background_music.mp3")
+--backgroundMusicChannel = audio.play(background_music, {channel = 3, loops = -1})
+--[[if (music_on) then
 	audio.resume(backgroundMusicChannel) 
 else 
 	audio.pause(backgroundMusicChannel) 
 end
-audio.setVolume(0.2)
+audio.setVolume(0.2)]]
 
 font = "Avenir_Next.ttc"
 
@@ -89,7 +89,7 @@ else
 	lang = eng
 end
 
-function change_music()
+--[[function change_music()
 	if (music_on) then
 		music_on = false
 		if (sound_on) then audio.play(click_sound) end
@@ -116,7 +116,7 @@ function change_sound()
 	end
 	baseTable.sound = sound_on
 	saveBase()
-end
+end]]
 
 function go_to_scene(set_scene,set_effect)
 	composer.removeScene(set_scene)
