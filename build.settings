@@ -29,7 +29,7 @@ settings =
 		-- portrait, portraitUpsideDown, landscapeLeft, landscapeRight
 
 		default = "",
-		supported = { "portrait","portraitUpsideDown" },
+		supported = { "portrait","portraitUpsideDown","landscapeLeft","landscapeRight" },
 	},
 	
 	excludeFiles =

@@ -25,48 +25,53 @@ function scene:create(event)
 
 	local sceneGroup = self.view
 
-	local sheetOption = 
-	{
-		width = 160,
-		height = 160,
-		numFrames = 4,
-		sheetContentWidth = 320,
-		sheetContentHeight = 320
-	}
-
-	local iconSheet = graphics.newImageSheet( "images/pic_sheet.png", sheetOption)
-	local sequenceData = {
-		name = "icons",
-		start = 1,
-		count = 4,
-	}
-
 	--background--
 	local background = display.newImageRect(sceneGroup, "images/bg_second.png", display.actualContentWidth, display.actualContentWidth*2 )
 	background.x, background.y = display.contentCenterX, display.contentCenterY
 	background.fill.effect = "filter.blurGaussian"
  
-	background.fill.effect.horizontal.blurSize = 20
+	background.fill.effect.horizontal.blurSize = 200
 	background.fill.effect.horizontal.sigma = 200
-	background.fill.effect.vertical.blurSize = 20
-	background.fill.effect.vertical.sigma = 140
+	background.fill.effect.vertical.blurSize = 200
+	background.fill.effect.vertical.sigma = 200
 
 	--лого--
+	--local logo
 	local  logo = display.newImageRect(sceneGroup, "images/logo.png", 510, 300)
 	logo.x, logo.y = display.contentCenterX, display.contentCenterY - display.contentCenterY*0.7
 
-	local color =  {
-    	highlight = { r=1, g=1, b=1 },
-    	shadow = { r=0.3, g=0.3, b=0.3 }
-	}
+	
 	
 
-	local playButton = display.newRoundedRect(sceneGroup, display.contentCenterX, display.contentCenterY, 200, 200, 10)
+	local playButton = display.newRoundedRect(sceneGroup, display.contentCenterX - 150, display.contentCenterY, 200, 200, 10)
 	playButton:setFillColor(unpack(BUTTON_COLOR))
+	local  playButtonImages = display.newImageRect(sceneGroup, "images/play_button.png", 120, 120)
+	playButtonImages.x, playButtonImages.y = display.contentCenterX - 150, display.contentCenterY
 
-	local Button_color =  {199/255, 171/255, 251/255} 
-	playButton:setStrokeColor( unpack(Button_color) )
-	--playButton:setEmbossColor( color )
+	local recordButton = display.newRoundedRect(sceneGroup, display.contentCenterX + 150, display.contentCenterY, 200, 200, 10)
+	recordButton:setFillColor(unpack(BUTTON_COLOR))
+	local  recordButtonImages = display.newImageRect(sceneGroup, "images/play_button.png", 120, 120)
+	recordButtonImages.x, recordButtonImages.y = display.contentCenterX + 150, display.contentCenterY
+
+
+	print("jj")
+	--print(display.actualContentHeight)
+	local function onOrientationChange( event )
+    	local currentOrientation = event.type
+    	print( "Current orientation: " .. currentOrientation )
+		print(display.actualContentHeight)
+
+		background.x, background.y = display.contentCenterX, display.contentCenterY
+
+
+	end
+  
+	Runtime:addEventListener( "orientation", onOrientationChange )
+	
+
+	--Затемнение
+	--local glass = display.newImageRect(sceneGroup, "images/glass.png", display.actualContentWidth, display.actualContentWidth*2 )
+	--glass.x, glass.y = display.contentCenterX, display.contentCenterY
 	
 	
 
