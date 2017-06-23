@@ -1,33 +1,15 @@
---[[
-========================
-=====OOOOOO=O=====O=====
-=====O======OO====O=====
-=====O======O=O===O=====
-=====OOO====O=====O=====
-=====O======O===O=O=====
-=====O======O====OO=====
-=====O======O=====O=====
-========================
-=====OOOOOOOOOOOOOO=====
-========================
-=======PONY QUIZ========
-====COPYRIGHT FNIGHT====
-========================
-]]--
-
-local composer = require("composer")
+local composer = require( "composer" )
 local json = require( "json" )
 local scene = composer.newScene()
-
-
 
 function scene:create(event)
 
 	local sceneGroup = self.view
 
 	--background--
-	local background = display.newImageRect(sceneGroup, "images/bg_second.png", display.actualContentWidth, display.actualContentWidth*2 )
+	local background = display.newImageRect(sceneGroup, "images/bg.png", display.actualContentHeight, display.actualContentHeight )
 	background.x, background.y = display.contentCenterX, display.contentCenterY
+	
 	background.fill.effect = "filter.blurGaussian"
  
 	background.fill.effect.horizontal.blurSize = 200
@@ -53,9 +35,6 @@ function scene:create(event)
 	local logo = display.newText(sceneGroup, "By Manzick \nFor FNight", display.contentCenterX, display.contentCenterY + display.actualContentHeight/4 + 50, font, 80)
 
 
-
-	print("jj")
-	--print(display.actualContentHeight)
 	local function onOrientationChange( event )
     	local currentOrientation = event.type
     	print( "Current orientation: " .. currentOrientation )
