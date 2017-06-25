@@ -18,6 +18,7 @@ function scene:create(event)
 	--background--
 	local background = display.newImageRect( sceneGroup, "images/bg.png", ACH, ACH )
 	background.x, background.y = CCX, CCY
+	
 	background.fill.effect = "filter.blurGaussian"
 	background.fill.effect.horizontal.blurSize = 200
 	background.fill.effect.horizontal.sigma = 200
@@ -42,31 +43,6 @@ function scene:create(event)
 	--Титры
 	local title = display.newText(sceneGroup, "By Manzick \nFor FNight", CCX, PORTRAITDOWN, font, 80)
 
-
-	
-
-	local function getDarkGlass()
-		local glass = display.capture( sceneGroup )
-		glass.height, glass.weight = ACH, ACW
-		glass.x, glass.y = CCX, CCY
-		glass.fill.effect = "filter.blurGaussian"
-		glass.fill.effect.horizontal.blurSize = 200
-		glass.fill.effect.horizontal.sigma = 200
-		glass.fill.effect.vertical.blurSize = 200
-		glass.fill.effect.vertical.sigma = 200
-
-		local  closeButton = display.newImageRect(sceneGroup, "images/close.png", 200, 200)
-		closeButton.x, closeButton.y = CCX - 150, CCY
-
-		local function breakGlass() 
-			glass:removeSelf()
-		end
-		glass:addEventListener("tap", breakGlass)
-
-	end
-	local function breakGlass() 
-		glass:removeSelf()
-	end
 
 	local function onOrientationChange( event )
 		--Локальные константы, которые еще и изменяются, чоооо?)
@@ -99,24 +75,21 @@ function scene:create(event)
 		end
 	end
 
-	local function goToGame()
-		go_to_scene("scene.game","fromRight")
+	local function go_to_game()
+		if (sound_on) then audio.play(click_sound) end 
+		go_to_scene("scene.store","fromRight")
+		
 	end
-
-
   
 	Runtime:addEventListener( "orientation", onOrientationChange )
-	playButton:addEventListener("tap", goToGame)
-	playButtonImages:addEventListener("tap", goToGame)
-	recordButton:addEventListener("tap", getDarkGlass)
-	recordButtonImages:addEventListener("tap", getDarkGlass)
-	--glass:addEventListener("tap", breakGlass)
+	playButton:addEventListener("tap", go_to_game)
+	playButtonImages:addEventListener("tap", go_to_game)
 
 
 		
 	--Затемнение
-	--local glass = display.newImageRect(sceneGroup, "images/glass.png", ACW, ACW*2 )
-	--glass.x, glass.y = CCX, CCY
+	--local glass = display.newImageRect(sceneGroup, "images/glass.png", display.actualContentWidth, display.actualContentWidth*2 )
+	--glass.x, glass.y = display.contentCenterX, display.contentCenterY
 
 	
 
