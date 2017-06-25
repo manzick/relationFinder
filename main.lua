@@ -20,7 +20,7 @@ function loadBase()
 		baseTable = json.decode(contents)
 	end
 
-	if (not(baseTable.levels)) then
+	if (not(baseTable.record)) then
 		baseTable = { 
 		["record"] = "0",
 		}

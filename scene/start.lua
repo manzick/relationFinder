@@ -3,8 +3,10 @@ local json = require( "json" )
 local scene = composer.newScene()
 
 function scene:create(event)
-	local score = false
 	local sceneGroup = self.view
+	--Всякие переменные
+	local score = false
+	local currentOrientation = "portrait"
 	--Константы представленные CoronaSDK
 	local ACH = display.actualContentHeight
 	local ACW = display.actualContentWidth
@@ -37,7 +39,7 @@ function scene:create(event)
 	--Кнопка рекордов--
 	local recordButton = display.newRoundedRect(sceneGroup, CCX + 150, CCY, 200, 200, 10)
 	recordButton:setFillColor(unpack(BUTTON_COLOR))
-	local  recordButtonImages = display.newImageRect(sceneGroup, "images/play_button.png", 120, 120)
+	local  recordButtonImages = display.newImageRect(sceneGroup, "images/best_button.png", 120, 120)
 	recordButtonImages.x, recordButtonImages.y = CCX + 150, CCY
 
 	--Титры
@@ -61,9 +63,15 @@ function scene:create(event)
 		glass.fill.effect.vertical.blurSize = 200
 		glass.fill.effect.vertical.sigma = 200
 
-
+		
 		local closeButton = display.newImageRect(sceneGroup, "images/close.png", 100, 100)
-		closeButton.x, closeButton.y = CCX, CCY + 450
+		if currentOrientation == "landscapeLeft" or currentOrientation == "landscapeRight" then
+			closeButton.x, closeButton.y = CCX, CCY + 250
+		end
+		if currentOrientation == "portrait" or currentOrientation == "portraitUpsideDown" then
+			closeButton.x, closeButton.y = CCX, CCY + 450
+		end 
+		
 		
 		local titleScore = display.newText(sceneGroup, lang.titleScore, CCX, PORTRAITUP, font, 80)
 		local scoreNote = display.newText(sceneGroup, baseTable.record, CCX, CCY, font, 80)
@@ -75,13 +83,30 @@ function scene:create(event)
 			scoreNote:removeSelf()
 			score = false
 		end
+		local function rotateGlass()
+			if glass.height then
+			
+			--Хмммм, как это работает? Поворачиваешь композер, а он убирает, но затем, какая-то магия возвращает все назад....
+
+			glass:removeSelf()
+			closeButton:removeSelf()
+			titleScore:removeSelf()
+			scoreNote:removeSelf()
+			--getDarkGlass()
+			print("rotate Glass")
+			end
+			
+
+		end
 		glass:addEventListener("tap", breakGlass)
+		closeButton:addEventListener("tap", breakGlass)
+		Runtime:addEventListener( "orientation", rotateGlass )
 
 	end
 	
 	local function onOrientationChange( event )
 		--Локальные константы, которые еще и изменяются, чоооо?)
-    	local currentOrientation = event.type
+    	currentOrientation = event.type
     	CCX, CCY = display.contentCenterX, display.contentCenterY
     	ACH, ACW = display.actualContentHeight, display.actualContentWidth
     	PORTRAITUP = CCY - ACH/4 - 50
