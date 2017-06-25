@@ -3,6 +3,7 @@ local json = require( "json" )
 local scene = composer.newScene()
 
 function scene:create(event)
+	local score = false
 	local sceneGroup = self.view
 	--Константы представленные CoronaSDK
 	local ACH = display.actualContentHeight
@@ -46,7 +47,12 @@ function scene:create(event)
 	
 
 	local function getDarkGlass()
-		local glass = display.capture( sceneGroup )
+		--if score then 
+		--	glass:removeSelf()
+		--end
+		score = true
+		display.save( sceneGroup, "temp.png", system.DocumentsDirectory )
+		local glass = display.newImage(sceneGroup, "temp.png", system.DocumentsDirectory )
 		glass.height, glass.weight = ACH, ACW
 		glass.x, glass.y = CCX, CCY
 		glass.fill.effect = "filter.blurGaussian"
@@ -55,19 +61,24 @@ function scene:create(event)
 		glass.fill.effect.vertical.blurSize = 200
 		glass.fill.effect.vertical.sigma = 200
 
-		local  closeButton = display.newImageRect(sceneGroup, "images/close.png", 200, 200)
-		closeButton.x, closeButton.y = CCX - 150, CCY
+
+		local closeButton = display.newImageRect(sceneGroup, "images/close.png", 100, 100)
+		closeButton.x, closeButton.y = CCX, CCY + 450
+		
+		local titleScore = display.newText(sceneGroup, lang.titleScore, CCX, PORTRAITUP, font, 80)
+		local scoreNote = display.newText(sceneGroup, baseTable.record, CCX, CCY, font, 80)
 
 		local function breakGlass() 
 			glass:removeSelf()
+			closeButton:removeSelf()
+			titleScore:removeSelf()
+			scoreNote:removeSelf()
+			score = false
 		end
 		glass:addEventListener("tap", breakGlass)
 
 	end
-	local function breakGlass() 
-		glass:removeSelf()
-	end
-
+	
 	local function onOrientationChange( event )
 		--Локальные константы, которые еще и изменяются, чоооо?)
     	local currentOrientation = event.type
@@ -86,6 +97,9 @@ function scene:create(event)
 			recordButtonImages.x, recordButtonImages.y = CCX, CCY + 150
 			logo.x, logo.y = LANDSCAPEUP, CCY
 			title.x, title.y = LANDSCAPEDOWN, CCY
+			--if score then
+			--	getDarkGlass()
+			--end
 			print( "боком" )
 		end
 		if currentOrientation == "portrait" or currentOrientation == "portraitUpsideDown" then
@@ -95,6 +109,9 @@ function scene:create(event)
 			recordButtonImages.x, recordButtonImages.y = CCX + 150, CCY
 			logo.x, logo.y = CCX, PORTRAITUP
 			title.x, title.y = CCX, PORTRAITDOWN
+			if score then
+				getDarkGlass()
+			end
 			print( "вертикально" )
 		end
 	end

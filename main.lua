@@ -22,7 +22,7 @@ function loadBase()
 
 	if (not(baseTable.levels)) then
 		baseTable = { 
-		["record"] = 0,
+		["record"] = "0",
 		}
 	end
 end
