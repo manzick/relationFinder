@@ -4,14 +4,15 @@ local scene = composer.newScene()
 
 function scene:create(event)
 	local sceneGroup = self.view
+	local cardsGroup = display.newGroup()
 	--Константы представленные CoronaSDK
 	local ACH = display.actualContentHeight
 	local ACW = display.actualContentWidth
 	local CCX = display.contentCenterX
 	local CCY = display.contentCenterY
 	--Константы специально для relation finder
-	local PORTRAITUP = CCY - ACH/4 - 50
-	local PORTRAITDOWN = CCY + ACH/4 + 50
+	local PORTRAITUP = CCY - ACH/4 - 125
+	local PORTRAITDOWN = CCY + ACH/4 + 125
 	local LANDSCAPEUP = CCX - ACW/4 - 50
 	local LANDSCAPEDOWN = CCX + ACW/4 + 50
 
@@ -25,23 +26,30 @@ function scene:create(event)
 	background.fill.effect.vertical.blurSize = 200
 	background.fill.effect.vertical.sigma = 200
 
-	--лого--
-	local logo = display.newText(sceneGroup, "Relation \nFinder", CCX, PORTRAITUP, font, 80)
+	--score--
+	local score = display.newText(sceneGroup, "0", CCX, PORTRAITUP, font, 80)
+
+	--cadrs--
+	local zeroX = CCX - 15 - 76 - 30 - 76 - 30 - 76 + 38
+	local zeroY = CCY - 15 - 76 - 30 - 76 - 30 - 76 + 38
+	local y = 0
+	for i = 0, 35 do
+		local j = i % 6
+		print(j)
+		print(i / 36)
+		local card = display.newRoundedRect(sceneGroup, zeroX + 106 * j, zeroY + 106 * y, 90, 90, 10)
+		if j == 5 then y = y + 1 end
+		cardsGroup:insert( card )
+	end
+
+	--pause button--
+	local  pauseButtonImages = display.newImageRect(sceneGroup, "images/play_button.png", 120, 120)
+	pauseButtonImages.x, pauseButtonImages.y = CCX, PORTRAITDOWN
 	
-	--Кнопка плей
-	local playButton = display.newRoundedRect(sceneGroup, CCX - 150, CCY, 200, 200, 10)
-	playButton:setFillColor(unpack(BUTTON_COLOR))
-	local  playButtonImages = display.newImageRect(sceneGroup, "images/play_button.png", 120, 120)
-	playButtonImages.x, playButtonImages.y = CCX - 150, CCY
 
-	--Кнопка рекордов--
-	local recordButton = display.newRoundedRect(sceneGroup, CCX + 150, CCY, 200, 200, 10)
-	recordButton:setFillColor(unpack(BUTTON_COLOR))
-	local  recordButtonImages = display.newImageRect(sceneGroup, "images/play_button.png", 120, 120)
-	recordButtonImages.x, recordButtonImages.y = CCX + 150, CCY
+	
 
-	--Титры
-	local title = display.newText(sceneGroup, "By Manzick \nFor FNight", CCX, PORTRAITDOWN, font, 80)
+	
 
 
 	local function onOrientationChange( event )
@@ -56,41 +64,22 @@ function scene:create(event)
 
 		background.x, background.y = CCX, CCY
 		if currentOrientation == "landscapeLeft" or currentOrientation == "landscapeRight" then
-			playButton.x, playButton.y = CCX, CCY - 150
-			playButtonImages.x, playButtonImages.y = CCX, CCY - 150
-			recordButton.x, recordButton.y = CCX, CCY + 150
-			recordButtonImages.x, recordButtonImages.y = CCX, CCY + 150
-			logo.x, logo.y = LANDSCAPEUP, CCY
-			title.x, title.y = LANDSCAPEDOWN, CCY
+			
 			print( "боком" )
 		end
 		if currentOrientation == "portrait" or currentOrientation == "portraitUpsideDown" then
-			playButton.x, playButton.y = CCX - 150, CCY
-			playButtonImages.x, playButtonImages.y = CCX - 150, CCY
-			recordButton.x, recordButton.y = CCX + 150, CCY
-			recordButtonImages.x, recordButtonImages.y = CCX + 150, CCY
-			logo.x, logo.y = CCX, PORTRAITUP
-			title.x, title.y = CCX, PORTRAITDOWN
+			
 			print( "вертикально" )
 		end
 	end
 
-	local function go_to_game()
-		if (sound_on) then audio.play(click_sound) end 
-		go_to_scene("scene.store","fromRight")
-		
-	end
+	
   
 	Runtime:addEventListener( "orientation", onOrientationChange )
-	playButton:addEventListener("tap", go_to_game)
-	playButtonImages:addEventListener("tap", go_to_game)
+	
 
 
 		
-	--Затемнение
-	--local glass = display.newImageRect(sceneGroup, "images/glass.png", display.actualContentWidth, display.actualContentWidth*2 )
-	--glass.x, glass.y = display.contentCenterX, display.contentCenterY
-
 	
 
 end
