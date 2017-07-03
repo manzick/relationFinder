@@ -45,13 +45,7 @@ function scene:create(event)
 	--Титры
 	local title = display.newText(sceneGroup, "By Manzick \nFor FNight", CCX, PORTRAITDOWN, font, 80)
 
-
-	
-
 	local function getDarkGlass()
-		--if score then 
-		--	glass:removeSelf()
-		--end
 		score = true
 		display.save( sceneGroup, "temp.png", system.DocumentsDirectory )
 		local glass = display.newImage(sceneGroup, "temp.png", system.DocumentsDirectory )
@@ -63,7 +57,6 @@ function scene:create(event)
 		glass.fill.effect.vertical.blurSize = 200
 		glass.fill.effect.vertical.sigma = 200
 
-		
 		local closeButton = display.newImageRect(sceneGroup, "images/close.png", 100, 100)
 		if currentOrientation == "landscapeLeft" or currentOrientation == "landscapeRight" then
 			closeButton.x, closeButton.y = CCX, CCY + 250
@@ -85,15 +78,10 @@ function scene:create(event)
 		end
 		local function rotateGlass()
 			if glass.height then
-			
-			--Хмммм, как это работает? Поворачиваешь композер, а он убирает, но затем, какая-то магия возвращает все назад....
-
-			glass:removeSelf()
-			closeButton:removeSelf()
-			titleScore:removeSelf()
-			scoreNote:removeSelf()
-			--getDarkGlass()
-			print("rotate Glass")
+				glass:removeSelf()
+				closeButton:removeSelf()
+				titleScore:removeSelf()
+				scoreNote:removeSelf()
 			end
 			
 
@@ -122,9 +110,6 @@ function scene:create(event)
 			recordButtonImages.x, recordButtonImages.y = CCX, CCY + 150
 			logo.x, logo.y = LANDSCAPEUP, CCY
 			title.x, title.y = LANDSCAPEDOWN, CCY
-			--if score then
-			--	getDarkGlass()
-			--end
 			print( "боком" )
 		end
 		if currentOrientation == "portrait" or currentOrientation == "portraitUpsideDown" then
@@ -134,11 +119,9 @@ function scene:create(event)
 			recordButtonImages.x, recordButtonImages.y = CCX + 150, CCY
 			logo.x, logo.y = CCX, PORTRAITUP
 			title.x, title.y = CCX, PORTRAITDOWN
-			if score then
-				getDarkGlass()
-			end
 			print( "вертикально" )
 		end
+		score = false
 	end
 
 	local function goToGame()
@@ -152,9 +135,6 @@ function scene:create(event)
 	playButtonImages:addEventListener("tap", goToGame)
 	recordButton:addEventListener("tap", getDarkGlass)
 	recordButtonImages:addEventListener("tap", getDarkGlass)
-	--glass:addEventListener("tap", breakGlass)
-
-
 		
 	--Затемнение
 	--local glass = display.newImageRect(sceneGroup, "images/glass.png", ACW, ACW*2 )
