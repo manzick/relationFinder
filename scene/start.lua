@@ -108,9 +108,15 @@ function scene:create(event)
 			playButtonImages.x, playButtonImages.y = CCX, CCY - 150
 			recordButton.x, recordButton.y = CCX, CCY + 150
 			recordButtonImages.x, recordButtonImages.y = CCX, CCY + 150
+			print( "боком" )
+		end
+		if currentOrientation == "landscapeRight" then
 			logo.x, logo.y = LANDSCAPEUP, CCY
 			title.x, title.y = LANDSCAPEDOWN, CCY
-			print( "боком" )
+		end
+		if currentOrientation == "landscapeLeft" then
+			logo.x, logo.y = LANDSCAPEDOWN, CCY
+			title.x, title.y = LANDSCAPEUP, CCY
 		end
 		if currentOrientation == "portrait" or currentOrientation == "portraitUpsideDown" then
 			playButton.x, playButton.y = CCX - 150, CCY
