@@ -31,14 +31,14 @@ function scene:create(event)
 	local logo = display.newText(sceneGroup, "Relation \nFinder", CCX, PORTRAITUP, font, 80)
 	
 	--Кнопка плей
-	local playButton = display.newRoundedRect(sceneGroup, CCX - 150, CCY, 200, 200, 10)
-	playButton:setFillColor(unpack(BUTTON_COLOR))
+	--local playButton = display.newRoundedRect(sceneGroup, CCX - 150, CCY, 200, 200, 10)
+	--playButton:setFillColor(unpack(BUTTON_COLOR))
 	local  playButtonImages = display.newImageRect(sceneGroup, "images/play_button.png", 120, 120)
 	playButtonImages.x, playButtonImages.y = CCX - 150, CCY
 
 	--Кнопка рекордов--
-	local recordButton = display.newRoundedRect(sceneGroup, CCX + 150, CCY, 200, 200, 10)
-	recordButton:setFillColor(unpack(BUTTON_COLOR))
+	--local recordButton = display.newRoundedRect(sceneGroup, CCX + 150, CCY, 200, 200, 10)
+	--recordButton:setFillColor(unpack(BUTTON_COLOR))
 	local  recordButtonImages = display.newImageRect(sceneGroup, "images/best_button.png", 120, 120)
 	recordButtonImages.x, recordButtonImages.y = CCX + 150, CCY
 
@@ -104,9 +104,9 @@ function scene:create(event)
 
 		background.x, background.y = CCX, CCY
 		if currentOrientation == "landscapeLeft" or currentOrientation == "landscapeRight" then
-			playButton.x, playButton.y = CCX, CCY - 150
+			--playButton.x, playButton.y = CCX, CCY - 150
 			playButtonImages.x, playButtonImages.y = CCX, CCY - 150
-			recordButton.x, recordButton.y = CCX, CCY + 150
+			--recordButton.x, recordButton.y = CCX, CCY + 150
 			recordButtonImages.x, recordButtonImages.y = CCX, CCY + 150
 			print( "боком" )
 		end
@@ -119,9 +119,9 @@ function scene:create(event)
 			title.x, title.y = LANDSCAPEUP, CCY
 		end
 		if currentOrientation == "portrait" or currentOrientation == "portraitUpsideDown" then
-			playButton.x, playButton.y = CCX - 150, CCY
+			--playButton.x, playButton.y = CCX - 150, CCY
 			playButtonImages.x, playButtonImages.y = CCX - 150, CCY
-			recordButton.x, recordButton.y = CCX + 150, CCY
+			--recordButton.x, recordButton.y = CCX + 150, CCY
 			recordButtonImages.x, recordButtonImages.y = CCX + 150, CCY
 			logo.x, logo.y = CCX, PORTRAITUP
 			title.x, title.y = CCX, PORTRAITDOWN
@@ -137,9 +137,9 @@ function scene:create(event)
 
   
 	Runtime:addEventListener( "orientation", onOrientationChange )
-	playButton:addEventListener("tap", goToGame)
+	--playButton:addEventListener("tap", goToGame)
 	playButtonImages:addEventListener("tap", goToGame)
-	recordButton:addEventListener("tap", getDarkGlass)
+	--recordButton:addEventListener("tap", getDarkGlass)
 	recordButtonImages:addEventListener("tap", getDarkGlass)
 		
 	--Затемнение
