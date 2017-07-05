@@ -6,6 +6,7 @@ function scene:create(event)
 	local sceneGroup = self.view
 	local cardsGroup = display.newGroup()
 	cardsGreyGroup = display.newGroup()
+	local color = {}
 	--Игровые переменные
 	local score = 0
 	local heart = 3
@@ -36,6 +37,13 @@ function scene:create(event)
 	local heartText = display.newText(sceneGroup, heart, CCX + 40, PORTRAITUP - 100, font, 50)
 	local scoreText = display.newText(sceneGroup, score, CCX, PORTRAITUP, font, 100)
 
+	--Create color array--
+	for i = 0, 17 do
+		local tempColor = { math.random(), math.random(), math.random() }
+		table.insert( color, tempColor )
+	end
+
+
 	--cards--
 	local zeroX = CCX - 15 - 76 - 30 - 76 - 30 - 76 + 38
 	local zeroY = CCY - 15 - 76 - 30 - 76 - 30 - 76 + 38
@@ -47,7 +55,8 @@ function scene:create(event)
 		local card = display.newRoundedRect(zeroX + 106 * j, zeroY + 106 * y, 90, 90, 10)
 		local a = {1, 4, 9, 16, 25, 36, 49, 64, 81}
 		print(a[1])
-		card:setFillColor(unpack( color[1] ))
+		card:setFillColor( math.random(), math.random(), math.random() )
+		--card:setFillColor(unpack( color[1] ))
 		
 		if j == 5 then y = y + 1 end
 		cardsGroup:insert( card )
@@ -85,7 +94,7 @@ function scene:create(event)
 	end
 
 
-	timer.performWithDelay( 2000, getGrayCard )
+	--timer.performWithDelay( 2000, getGrayCard )
 		--sceneGroup:insert( cardsGreyGroup )
 
 

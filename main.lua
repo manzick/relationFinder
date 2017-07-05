@@ -2,7 +2,6 @@ local composer = require("composer")
 local json = require("json")
 local scene = composer.newScene()
 local locale = require("locale")
-local color = require("color")
 ads = require("ads")
 
 baseTable = {}
