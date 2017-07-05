@@ -45,7 +45,9 @@ function scene:create(event)
 		print(j)
 		print(i / 36)
 		local card = display.newRoundedRect(zeroX + 106 * j, zeroY + 106 * y, 90, 90, 10)
-		--card:setFillColor(unpack(BUTTON_COLOR))
+		local a = {1, 4, 9, 16, 25, 36, 49, 64, 81}
+		print(a[1])
+		card:setFillColor(unpack( color[1] ))
 		
 		if j == 5 then y = y + 1 end
 		cardsGroup:insert( card )
