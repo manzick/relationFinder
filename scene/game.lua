@@ -5,11 +5,16 @@ local scene = composer.newScene()
 function scene:create(event)
 	local sceneGroup = self.view
 	local cardsGroup = display.newGroup()
-	cardsGreyGroup = display.newGroup()
+	local cardsGreyGroup = display.newGroup()
 	local color = {}
+	local colorBegin = { 
+ 		0, 0, 0, 0, 0, 0, 
+  		0, 0, 0, 0, 0, 0, 
+		0, 0, 0, 0, 0, 0, 
+	}
 	--Игровые переменные
 	local score = 0
-	local heart = 3
+	local heart = "00:00"
 	--Константы представленные CoronaSDK
 	local ACH = display.actualContentHeight
 	local ACW = display.actualContentWidth
@@ -32,15 +37,53 @@ function scene:create(event)
 	background.fill.effect.vertical.sigma = 200
 
 	--score--
-	local heartImage = display.newImageRect( sceneGroup, "images/heart.png", 70, 70 )
-	heartImage.x, heartImage.y = CCX - 20, PORTRAITUP - 100
-	local heartText = display.newText(sceneGroup, heart, CCX + 40, PORTRAITUP - 100, font, 50)
+	local timerText = display.newText(sceneGroup, heart, CCX, PORTRAITUP - 100, font, 50)
 	local scoreText = display.newText(sceneGroup, score, CCX, PORTRAITUP, font, 100)
 
+	print("Today")
+	print(math.abs(31 - 63))
 	--Create color array--
-	for i = 0, 17 do
-		local tempColor = { math.random(), math.random(), math.random() }
-		table.insert( color, tempColor )
+	for i = 1, 18 do
+		local one = math.random(1, 255)
+		local two = math.random(1, 255)
+		local tree = math.random(1, 255)
+		--local tempSTR = "color1:  " .. one .. " " .. two .. " " .. tree
+		--print(tempSTR)
+		--local notDone = true
+		
+		
+		for j = 1, #color do
+			print("beliver: "..j)
+			--if notDone then 
+			local tempSTR = "colorPro:  " .. math.abs(color[j][1] - one) .. " " .. math.abs(color[j][2] - two) .. " " .. math.abs(color[j][3] - tree)
+			--print(tempSTR)
+			if 	(math.abs(color[j][1] - one) < 50 and math.abs(color[j][2] - two) < 50) then 		
+					one = math.random(1, 255)
+					two = math.random(1, 255)
+			end	
+			if 	(math.abs(color[j][3] - tree) < 50 and math.abs(color[j][2] - two) < 50) then 		
+					two = math.random(1, 255)
+					tree = math.random(1, 255)
+			end	
+			if 	(math.abs(color[j][1] - one) < 50 and math.abs(color[j][3] - tree) < 50) then 		
+					one = math.random(1, 255)
+					tree = math.random(1, 255)
+			end	
+			if 	math.abs(color[j][1] - one) < 50 and math.abs(color[j][2] - two) < 50 and math.abs(color[j][3] - tree) < 50 then 		
+					one = math.random(1, 255)
+					two = math.random(1, 255)
+					tree = math.random(1, 255)
+			end	
+			
+		end
+		
+		
+		local tempSTR = "color2:  " .. one .. " " .. two .. " " .. tree
+		print(tempSTR)
+
+		local tempColor = { one, two, tree }
+		--local tempColor = { math.random(1, 255)/255, math.random(1, 255)/255, math.random(1, 255)/255 }
+		color[#color + 1] = tempColor
 	end
 
 
@@ -50,26 +93,23 @@ function scene:create(event)
 	local y = 0
 	for i = 0, 35 do
 		local j = i % 6
-		print(j)
-		print(i / 36)
 		local card = display.newRoundedRect(zeroX + 106 * j, zeroY + 106 * y, 90, 90, 10)
-		local a = {1, 4, 9, 16, 25, 36, 49, 64, 81}
-		print(a[1])
-		card:setFillColor( math.random(), math.random(), math.random() )
-		--card:setFillColor(unpack( color[1] ))
-		
+
+		local randomNumber = math.random(1, 18)
+		while colorBegin[randomNumber] == 2 do
+			randomNumber = math.random(1, 18)
+		end
+		colorBegin[randomNumber] = colorBegin[randomNumber] + 1
+		card:setFillColor( color[randomNumber][1]/255, color[randomNumber][2]/255, color[randomNumber][3]/255 )
 		if j == 5 then y = y + 1 end
 		cardsGroup:insert( card )
 	end
 	sceneGroup:insert( cardsGroup )
 
-
 	--greyCards--
 	local y = 0
 	for i = 0, 35 do
 		local j = i % 6
-		print(j)
-		print(i / 36)
 		local grayCard = display.newRoundedRect(zeroX + 106 * j, zeroY + 106 * y, 300, 300, 10)
 		grayCard:setFillColor(unpack(BUTTON_COLOR))
 		grayCard.isVisible = false
@@ -83,7 +123,7 @@ function scene:create(event)
 
 
 
-	function getGrayCard()
+	local function getGrayCard()
 			--cardsGreyGroup[1].isVisible = true
 
 		for i = 1, 36 do
@@ -94,7 +134,7 @@ function scene:create(event)
 	end
 
 
-	--timer.performWithDelay( 2000, getGrayCard )
+	timer.performWithDelay( 2000, getGrayCard )
 		--sceneGroup:insert( cardsGreyGroup )
 
 
@@ -190,8 +230,7 @@ function scene:create(event)
 		end
 		if currentOrientation == "landscapeRight" then
 			scoreText.x, scoreText.y = LANDSCAPEUP, CCY
-			heartImage.x, heartImage.y = LANDSCAPEUP - 20, CCY - 100
-			heartText.x, heartText.y  =  LANDSCAPEUP + 40, CCY - 100
+			timerText.x, timerText.y  =  LANDSCAPEUP, CCY - 100
 			pauseButtonImages.x, pauseButtonImages.y = LANDSCAPEDOWN, CCY
 
 			
@@ -199,8 +238,7 @@ function scene:create(event)
 		end
 		if currentOrientation == "landscapeLeft" then
 			scoreText.x, scoreText.y = LANDSCAPEDOWN, CCY
-			heartImage.x, heartImage.y = LANDSCAPEDOWN - 20, CCY - 100
-			heartText.x, heartText.y  =  LANDSCAPEDOWN + 40, CCY - 100
+			timerText.x, timerText.y  =  LANDSCAPEDOWN, CCY - 100
 			pauseButtonImages.x, pauseButtonImages.y = LANDSCAPEUP, CCY
 
 			
@@ -208,8 +246,7 @@ function scene:create(event)
 		end
 		if currentOrientation == "portrait" or currentOrientation == "portraitUpsideDown" then
 			scoreText.x, scoreText.y = CCX, PORTRAITUP
-			heartImage.x, heartImage.y = CCX - 20, PORTRAITUP - 100
-			heartText.x, heartText.y  =  CCX + 40, PORTRAITUP - 100
+			timerText.x, timerText.y  =  CCX, PORTRAITUP - 100
 			pauseButtonImages.x, pauseButtonImages.y = CCX, PORTRAITDOWN
 
 			
